@@ -1,0 +1,22 @@
+<div class="container-fluid" style="width: 100%;margin: 0px">
+<div class="row no-gutters"
+ style="height: 70px; border: 1px blue; border-style: solid; margin-left: -15px;margin-right: -15px">
+    <app-filter></app-filter>
+</div>
+
+<div class="row no-gutters" style="margin-left: -15px;margin-right: -15px">
+    <div [class.col-md-9]="isSelected" [class.col-md-12]="!isSelected" style="height: 470px; border: 1px blue; border-style: solid;">
+        <input type="button" (click)="onClick()" value="click"/>
+    </div>
+     <div class="col-md-3" *ngIf="isSelected" style="height: 470px; border: 1px blue; border-style: solid;">
+        
+    </div>
+
+</div>
+</div>
+<ngx-spinner
+bdColor = "rgba(51, 51, 51, 0.8)"
+size = "large"
+color = "#fff"
+type = "ball-8bits"
+></ngx-spinner>
