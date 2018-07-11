@@ -1,17 +1,125 @@
-<div class="container-fluid" style="width: 100%;margin: 0px">
-<div class="row no-gutters"
- style="height: 70px; border: 1px blue; border-style: solid; margin-left: -15px;margin-right: -15px">
-    <app-filter></app-filter>
+<div class="container-fluid mt-2"  style="width: 100%;margin: 0px;height: 100%">
+    <div class="row mat-elevation-z8" style="height:20%; ">
+            <app-filter></app-filter>
+    </div>
+
+<div class="row  mt-2" style="height: 80%; border: 2px palegreen ;   ">
+    <div class="container-fluid" style="height: 100%" >
+    <div class="row" style="height: 100%;">
+    <div [class.col-md-9]="isSelected" [class.col-md-12]="!isSelected"  >
+        <!--<input type="button" (click)="onClick()" value="click"/>-->
+        <!--<ag-grid-angular 
+            #agGrid
+            style="width: 100%; height: 100%;" 
+            class="ag-theme-balham"
+            [rowData]="rowData" 
+            [columnDefs]="columnDefs"
+            rowSelection="single"
+            (selectionChanged) = "abc($event)"
+        >
+        </ag-grid-angular>-->
+
+        <div class="mat-elevation-z8" style=" width: 100%; height: 100%;margin-left: -15px; margin-right: -15px">
+            <table mat-table [dataSource]="dataSource" style="height: 100px">
+
+            <!-- Position Column -->
+                <ng-container matColumnDef="tradeDate">
+                <th mat-header-cell *matHeaderCellDef><strong> Trade Date.</strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.tradeDate|date}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="commodity">
+                <th mat-header-cell *matHeaderCellDef><strong> Commodity </strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.commodity}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="side">
+                <th mat-header-cell *matHeaderCellDef><strong> Side </strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.side}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef> <strong> Quantity </strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef> <strong> Price </strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="counterparty">
+                <th mat-header-cell *matHeaderCellDef> <strong> Counterparty </strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.counterparty}} </td>
+                </ng-container>
+
+                 <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef> <strong> Location </strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+                </ng-container>
+
+                 <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef>  </th>
+                    <td mat-cell *matCellDef="let element">
+                        <fa-icon [icon]="['fas', 'trash']" (click)="delete(element)"></fa-icon>
+                    </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row
+                 *matRowDef="let row; columns: displayedColumns;"
+                 [ngClass]="{'highlight': selectedRowId == row._id}"
+                 (click)="highlight(row)"></tr>
+             </table>
+
+         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
+ </div>
 
-<div class="row no-gutters" style="margin-left: -15px;margin-right: -15px">
-    <div [class.col-md-9]="isSelected" [class.col-md-12]="!isSelected" style="height: 470px; border: 1px blue; border-style: solid;">
-        <input type="button" (click)="onClick()" value="click"/>
-    </div>
-     <div class="col-md-3" *ngIf="isSelected" style="height: 470px; border: 1px blue; border-style: solid;">
-        
-    </div>
+    <div  class="col-md-3" *ngIf="isSelected" 
+         style="padding: 0px;border-left: 1px;border-top: 1px;border-right: 1px;border-color: darkgray;border-bottom: 1px; border-style: solid; ">
+        <div class="container">
+            <div class="row" style="background: lightgrey">
+                <div class="col-md-9">
+                  
+                </div>
+                <div class="col-md-3">
+                     
+                    <fa-icon [icon]="['fas', 'times']"
+                    class="float-right"  ml-1
+                     (click)="close()"></fa-icon>
+                     
+                      <fa-icon [icon]="['fas', 'edit']"
+                    class="float-right" mr-1
+                     (click)="edit()"></fa-icon>
+                </div>
+            </div>
+            <div class="row">
 
+            </div>
+            <div class="h-100 " style="margin-bottom: -25px">
+                <app-details (saveComplete)="Saved($event)"
+                    [trade]="selectedRow"
+                    [inEditMode]="inEditMode"
+                    ></app-details>
+            </div>
+        </div>       
+    </div>
+    </div>
+    <div class="row">
+       <div [class.col-md-9]="isSelected" [class.col-md-12]="!isSelected" style="margin-top: -3px">
+           <img class="img-responsive float-right" 
+                style="height: 30px; width: 30px; margin-top: -3px"
+                 src="assets/images/add.ico"
+                 (click)="add()">
+           <!--<fa-icon [icon]="['fas', 'plus']"  class="float-right"></fa-icon>-->
+       </div>
+    </div>
+    </div>
 </div>
 </div>
 <ngx-spinner
@@ -20,3 +128,4 @@ size = "large"
 color = "#fff"
 type = "ball-8bits"
 ></ngx-spinner>
+<!--<mat-spinner style="vertical-align: center"  *ngIf="isLoading"></mat-spinner>-->

@@ -1,0 +1,100 @@
+<div class="container">
+  <!--<div class="row" style="background: lightgray; width: 100%; margin-left: -25px">
+    <span>Trade Id</span>
+  </div>-->
+<div class="row mb-2">
+    <div class="col-md-6">
+      <strong> Trade Date</strong>
+    </div>
+    <div class="col-md-6">
+      <span *ngIf="!inEditMode">{{trade.tradeDate|date}}</span>
+      <mat-form-field *ngIf="inEditMode" class="w-100" style="align-items: baseline;margin-top: -15px">
+        <input matInput [matDatepicker]="picker1"  [formControl]="trade.tradeDate|stringToDate"
+        (dateChange)="tradeDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-md-6">
+      <strong> Commodity </strong>
+    </div>
+    <div class="col-md-6" >
+      <span *ngIf="!inEditMode">{{trade.commodity}}</span>
+      <mat-form-field  class="w-100 h-100" style="align-items: baseline;margin-top: -15px"  *ngIf="inEditMode">
+        <input matInput style="height: 100% ; vertical-align: top; " [value]="trade.commodity"
+        (change)="commodityChange($event)">
+      </mat-form-field>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-md-6">
+      <strong>Side</strong>
+    </div>
+    <div class="col-md-6">
+      <span *ngIf="!inEditMode">{{trade.side}}</span>
+      <mat-radio-group *ngIf="inEditMode">
+        <mat-radio-button value="1" [checked]="isBuy(trade.side)" (click) ="changeSide(true)" >Buy</mat-radio-button>
+        <mat-radio-button value="2" [checked]="!isBuy(trade.side)" (click) ="changeSide(false)">Sell</mat-radio-button>
+      </mat-radio-group>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-md-6">
+      <strong>Qty (MT)</strong>
+    </div>
+    <div class="col-md-6">
+      <span *ngIf="!inEditMode">{{trade.quantity}}</span>
+      <mat-form-field class="w-100" *ngIf="inEditMode" style="margin-top: -15px">
+        <input matInput  [value]="trade.quantity" (change)="quantityChange($event)">
+      </mat-form-field>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-md-6">
+      <strong> Price(/MT)</strong>
+    </div>
+    <div class="col-md-6">
+      <span *ngIf="!inEditMode">{{trade.price}}   <strong class="ml-2">USD</strong></span>
+      <mat-form-field class="float-left" *ngIf="inEditMode" style="margin-top: -15px; width: 80%">
+        <input matInput  [(value)]="trade.price" (change)="priceChange($event)">
+      </mat-form-field>
+
+      <strong *ngIf="inEditMode" class="float-left" style="width: 20%">USD</strong>
+    </div>
+    
+</div>
+<div class="row mb-2">
+  <div class="col-md-6">
+    <strong>Counterparty</strong>
+  </div>
+  <div class="col-md-6">
+    <span *ngIf="!inEditMode">{{trade.counterparty}}</span>
+    <mat-form-field class="w-100" *ngIf="inEditMode" style="margin-top: -15px">
+        <input matInput [value]="trade.counterparty" (change)="counterpartyChange($event)">
+      </mat-form-field>
+  </div>
+</div>
+<div class="row mb-2">
+  <div class="col-md-6">
+    <strong>Location </strong>
+  </div>
+  <div class="col-md-6">
+    <span *ngIf="!inEditMode">{{trade.location}}</span>
+    <mat-form-field class="w-100" *ngIf="inEditMode" style="margin-top: -15px">
+        <input matInput  [value]="trade.location" (change)="locationChange($event)">
+      </mat-form-field>
+  </div>
+</div>
+<div class="row mb-2" *ngIf="inEditMode">
+  <div class="col-md-6"></div>
+  <div class="col-md-3">
+     <button mat-button class="float-right d-inline-block">Cancel</button>
+  </div>
+  <div class="col-md-3">
+     <button mat-button class="float-right d-inline-block" (click)="save()">Save</button>
+  </div>
+  
+</div>
+</div>

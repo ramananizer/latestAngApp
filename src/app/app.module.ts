@@ -12,7 +12,15 @@ import {MatButtonModule,
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatIconModule
+  MatIconModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatRadioModule,
+  MatRadioButton,
+  MatRadioGroup,
+  MatProgressSpinnerModule,
+  MatTabsModule,
+  MatDialogModule
 } from '@angular/material';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -23,16 +31,27 @@ import { HomeComponent } from './home-component/home-component.component';
 import {routingModule} from './app.module.routing';
 import {LoginRoutingModule} from './login-routing.module';
 import {LoginComponent} from './login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginStatusComponent } from './login-status/login-status.component';
 import { MenuComponentComponent } from './menu-component/menu-component.component';
-import { TradeComponent } from './trade/trade.component';
+import { TradeComponent, DialogOverviewExampleDialog, DialogYesNo } from './trade/trade.component';
 import {TradeDataResolver} from '../route-guards/tradeDataResolver';
 import{tradeService} from '../services/tradeService';
 import{AuthGuard} from '../route-guards/auth-guard.service';
 import { FilterComponent } from './filter/filter.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AgGridModule } from 'ag-grid-angular';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTrash, faTimes, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { DetailsComponent } from './details/details.component';
+import{StringToDatePipe} from '../pipes/stringToDatePipe';
+
+library.add(faTrash);
+library.add(faTimes);
+library.add(faEdit);
+library.add(faPlus);
 
 @NgModule({
   declarations: [
@@ -44,17 +63,22 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     LoginStatusComponent,
     MenuComponentComponent,
     TradeComponent,
-    FilterComponent
+    FilterComponent,
+    DetailsComponent,
+    StringToDatePipe,
+    DialogOverviewExampleDialog,
+    DialogYesNo
   ],
   exports :[
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
-    MatOptionModule
+    MatOptionModule,
+    MatRadioModule
   ],
   imports: [
-    FormsModule,
+    FormsModule,ReactiveFormsModule,
     MatButtonModule, MatCheckboxModule,MatFormFieldModule,
     MatInputModule,
     MatRippleModule,MatOptionModule,
@@ -67,7 +91,19 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     routingModule,
     LoginRoutingModule,
     HttpClientModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    AgGridModule.withComponents([]),
+    MatTableModule,
+    MatPaginatorModule,
+    FontAwesomeModule,
+    MatRadioModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatDialogModule
+  ],
+  entryComponents :[
+    DialogOverviewExampleDialog,
+    DialogYesNo
   ],
   providers: [AuthGuard,
     TradeDataResolver,
